@@ -4,6 +4,7 @@ import * as Location from "expo-location";
 import { Image } from 'expo-image';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from "@expo/vector-icons";
+import Carousel from "../components/Carousel";
 
 const HomeScreen = () => {
     const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
@@ -101,6 +102,7 @@ const HomeScreen = () => {
                     <Text>Home</Text>
                     <Text style={styles.locationText}> {displayCurrentAddress}</Text>
                 </View>
+                {/* profile image */}
                 <Pressable>
                     <Image
 
@@ -111,10 +113,13 @@ const HomeScreen = () => {
                 </Pressable>
 
             </View>
+            {/* search bar */}
             <View style={styles.searchBar}>
                 <TextInput placeholder="search" />
                 <AntDesign name="search1" size={24} color="orangered" />
             </View>
+            {/* <Carousel /> */}
+            <Carousel />
         </View>
     );
 };

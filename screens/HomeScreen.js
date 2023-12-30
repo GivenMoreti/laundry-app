@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View, Alert, Pressable, TextInput } from "react-native";
+import { StyleSheet, Text, View, Alert, Pressable, TextInput, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { Image } from 'expo-image';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from "@expo/vector-icons";
-import Carousel from "../components/Carousel";
+// import Carousel from "../components/Carousel";
+import Services from "../components/Services";
+import MyImageList from "../components/MyImageList";
 
 const HomeScreen = () => {
     const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
@@ -95,32 +97,45 @@ const HomeScreen = () => {
         //run whenever there is a state update
     }, []); //if item is passed, its gonna run everytime it changes
     return (
-        <View style={styles.container}>
-            <View style={styles.homeContainer}>
-                <View style={styles.locationContainer}>
-                    <Ionicons name="location" size={30} color="orangered" />
-                    <Text>Home</Text>
-                    <Text style={styles.locationText}> {displayCurrentAddress}</Text>
+        <ScrollView
+            vertical
+            showsVerticalScrollIndicator
+        >
+            <View style={styles.container}>
+                <View style={styles.homeContainer}>
+                    <View style={styles.locationContainer}>
+                        <Ionicons name="location" size={30} color="orangered" />
+                        <Text>Home</Text>
+                        <Text style={styles.locationText}> {displayCurrentAddress}</Text>
+                    </View>
+                    {/* profile image */}
+                    <Pressable>
+                        <Image
+
+                            contentFit="cover"
+                            transition={1000}
+                            style={styles.profileImg}
+                            source={{ uri: "https://t3.ftcdn.net/jpg/05/52/15/68/360_F_552156839_hQTIBjd35zljkgSz65pDaUUSyKK53DtZ.jpg" }} />
+                    </Pressable>
+
                 </View>
-                {/* profile image */}
-                <Pressable>
-                    <Image
+                {/* search bar */}
+                <View style={styles.searchBar}>
+                    <TextInput placeholder="search" />
+                    <AntDesign name="search1" size={24} color="orangered" />
+                </View>
 
-                        contentFit="cover"
-                        transition={1000}
-                        style={styles.profileImg}
-                        source={{ uri: "https://t3.ftcdn.net/jpg/05/52/15/68/360_F_552156839_hQTIBjd35zljkgSz65pDaUUSyKK53DtZ.jpg" }} />
-                </Pressable>
+                {/* removed carousel */}
+                {/* <Carousel /> */}
+                <MyImageList />
+
+                {/* services */}
+                <Services />
+
+
 
             </View>
-            {/* search bar */}
-            <View style={styles.searchBar}>
-                <TextInput placeholder="search" />
-                <AntDesign name="search1" size={24} color="orangered" />
-            </View>
-            {/* <Carousel /> */}
-            <Carousel />
-        </View>
+        </ScrollView>
     );
 };
 
@@ -159,5 +174,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
 
 
+    }, container: {
+        flex: 1,
     }
 });

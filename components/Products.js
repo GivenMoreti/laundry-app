@@ -52,8 +52,8 @@ const Products = () => {
                                     <Text>{item.title}</Text>
                                     <Text>R{item.price}</Text>
                                     <Text>{item.quantity}</Text>
-                                    <AntDesign onPress={() => { Alert.alert("plus") }} name="plus" size={24} color="orangered" />
-                                    <AntDesign onPress={() => { Alert.alert("minus") }} name="minus" size={24} color="skyblue" />
+                                    <AntDesign onPress={() => { Alert.alert(`Added ${item.title} to basket`) }} name="plus" size={24} color="orangered" />
+                                    <AntDesign onPress={() => { Alert.alert(`Removed ${item.title} to basket`) }} name="minus" size={24} color="skyblue" />
                                 </View>
                             </Pressable>
                         </View>

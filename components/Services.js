@@ -34,27 +34,27 @@ const Services = () => {
   ];
 
   return (
-    <ScrollView >
-      <View style={styles.listContainer}>
 
-        <View>
-          <Text>Our Services</Text>
-        </View>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
+    <View style={styles.listContainer}>
 
-          data={servicesData}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <Pressable key={item.id}>
-              <Image style={styles.serviceImg} source={{ uri: item.image }} />
-              <Text style={styles.serviceText}>{item.title}</Text>
-            </Pressable>
-          )}
-        />
+      <View>
+        <Text style={styles.headingText}>Our Services</Text>
       </View>
-    </ScrollView>
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+
+        data={servicesData}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <Pressable key={item.id}>
+            <Image style={styles.serviceImg} source={{ uri: item.image }} />
+            <Text style={styles.serviceText}>{item.title}</Text>
+          </Pressable>
+        )}
+      />
+    </View>
+
   );
 };
 
@@ -63,17 +63,21 @@ export default Services;
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
-    margin: 10,
+    margin: 0,
+    backgroundColor: "#ecf0f1",
+    padding: 10,
   },
   serviceImg: {
     width: 200,
     height: 200,
     margin: 5,
-    borderRadius:5,
+    borderRadius: 5,
   }, serviceText: {
     marginTop: 10,
-    fontSize: 20,
-
+    fontSize: 15,
     textAlign: "center"
+  }, headingText: {
+    textAlign: "center",
+    fontWeight: "900",
   }
 });

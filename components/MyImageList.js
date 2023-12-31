@@ -29,7 +29,7 @@ const MyImageList = () => {
         <ScrollView>
             <View style={styles.container}>
                 <View>
-                    <Text>What we have done</Text>
+                    <Text style={styles.headingBanner}>What we have done</Text>
                 </View>
                 <FlatList
                     data={imagesData}
@@ -59,5 +59,8 @@ const styles = StyleSheet.create({
     }, container: {
         flex: 1,
         margin: 5,
+    }, headingBanner: {
+        textAlign: "center",
+        fontWeight: "900",
     }
 })

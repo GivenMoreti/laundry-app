@@ -26,7 +26,7 @@ const MyImageList = () => {
         },
     ];
     return (
-        <ScrollView>
+       
             <View style={styles.container}>
                 <View>
                     <Text style={styles.headingBanner}>What we have done</Text>
@@ -44,7 +44,7 @@ const MyImageList = () => {
                     )}
                 />
             </View>
-        </ScrollView>
+     
     )
 }
 

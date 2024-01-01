@@ -6,7 +6,6 @@ import {
   FlatList,
   Image,
   Pressable,
-  ScrollView,
 } from "react-native";
 
 const Services = () => {
@@ -47,10 +46,12 @@ const Services = () => {
         data={servicesData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Pressable key={item.id}>
-            <Image style={styles.serviceImg} source={{ uri: item.image }} />
-            <Text style={styles.serviceText}>{item.title}</Text>
-          </Pressable>
+          <View style={styles.serviceItem}>
+            <Pressable key={item.id}>
+              <Image style={styles.serviceImg} source={{ uri: item.image }} />
+              <Text style={styles.serviceText}>{item.title}</Text>
+            </Pressable>
+          </View>
         )}
       />
     </View>
@@ -62,22 +63,25 @@ export default Services;
 
 const styles = StyleSheet.create({
   listContainer: {
-    flex: 1,
-    margin: 0,
-    backgroundColor: "#ecf0f1",
     padding: 10,
+    height: 250,
   },
   serviceImg: {
-    width: 200,
-    height: 200,
-    margin: 5,
-    borderRadius: 5,
+    width: 150,
+    height: 150,
+    padding: 2,
+    borderRadius: 75,
   }, serviceText: {
-    marginTop: 10,
-    fontSize: 15,
+    marginTop: 2,
+    fontSize: 13,
     textAlign: "center"
   }, headingText: {
     textAlign: "center",
     fontWeight: "900",
+  }, serviceItem: {
+    padding: 10,
+    margin: 10,
+    backgroundColor: "#ecf0f1",
+    borderRadius: 5,
   }
 });

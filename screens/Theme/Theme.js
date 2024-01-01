@@ -10,7 +10,6 @@ const Theme = {
         primarySecondary:"#95a5a6",
         primarySecondaryBackround:"#7f8c8d"
 
-
     },
     fonts: {
         primarySize: 18,

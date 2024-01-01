@@ -5,7 +5,7 @@ import {
   Alert,
   Pressable,
   TextInput,
-  ScrollView,
+
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
@@ -102,12 +102,12 @@ const Header = () => {
   }, []); //if item is passed, its gonna run everytime it changes
 
   return (
-    <View>
+    <View style={styles.homeMainContainer}>
       <View style={styles.homeContainer}>
 
         <View style={styles.locationContainer}>
           <Ionicons name="location" size={30} color="orangered" />
-       
+
           <Text style={styles.locationText}> {displayCurrentAddress}</Text>
         </View>
         {/* profile image */}
@@ -137,8 +137,12 @@ const styles = StyleSheet.create({
   homeContainer: {
     flexDirection: "row",
     width: "100%",
-    height: 120,
+    // height: 120,
     padding: 20,
+    
+  },
+  homeMainContainer:{
+    flex:1,
     backgroundColor: "#ecf0f1",
   },
   profileImg: {
@@ -149,9 +153,9 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   locationContainer: {
-    marginTop:30,
+    marginTop: 30,
     width: "80%",
-    flexDirection:"row",
+    flexDirection: "row",
   },
   locationText: {
     padding: 1,
@@ -163,7 +167,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.8,
     justifyContent: "space-between",
     padding: 10,
-    margin: 10,
+    
+    margin:20,
+    marginTop:2,
+  
     borderRadius: 7,
     alignItems: "center",
   },

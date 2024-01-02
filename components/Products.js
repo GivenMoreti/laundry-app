@@ -22,26 +22,20 @@ import {
     decrementProductQuantity,
     incrementProductQuantity,
 } from "../Redux/Reducers/ProductReducer";
+import GoToCart from "./GoToCart";
 
 const Products = ({ item }) => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart.cart);
 
     console.log("cart arr ", cart);
-    //update cart quantity ui
-    let cartQuantity = 0;
-    cart.forEach((element) => {
-        cartQuantity = element.quantity;
-    });
-    // console.log(cartQuantity)
 
-    
-   let cartCost = 0;
-   cart.forEach((element)=>{
-    cartCost += element.quantity* element.price;
-   })
-   console.log(cartCost);
-
+    // to be added to GoToCart.js bottom pane
+    const totalPrice = cart.map((item) => item.price * item.quantity)
+        .reduce((curr, prev) => curr + prev, 0);
+    //total cart quantity.
+    const cartQuantity = cart.map((item) => item.quantity)
+        .reduce((curr, prev) => curr + prev, 0);
 
 
     const product = useSelector((state) => state.product.product);
@@ -122,7 +116,7 @@ const Products = ({ item }) => {
                                             />
 
                                             <Text>{cartQuantity}</Text>
-                                               
+
                                             <AntDesign
                                                 name="minus"
                                                 size={24}
@@ -150,6 +144,11 @@ const Products = ({ item }) => {
                     )}
                 />
             </View>
+            {/* go to cart component */}
+            {/* only render when cart has something */}
+            {cart.length > 0 ? (
+                <GoToCart price={totalPrice} totalItems={cartQuantity} />
+            ) : (null)}
         </View>
     );
 };

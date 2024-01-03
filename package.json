@@ -9,7 +9,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@awrminkhodaei/react-native-horizontal-datepicker": "^0.1.6",
     "@react-native-community/slider": "4.4.2",
+    "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
     "@reduxjs/toolkit": "^2.0.1",

@@ -12,8 +12,13 @@ import * as Location from "expo-location";
 import { Image } from "expo-image";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
 
 const Header = () => {
+
+  const navigation = useNavigation();
+
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
     "location loading..."
   );
@@ -111,7 +116,9 @@ const Header = () => {
           <Text style={styles.locationText}> {displayCurrentAddress}</Text>
         </View>
         {/* profile image */}
-        <Pressable>
+        <Pressable
+          onPress={() => navigation.navigate("Profile")}
+        >
           <Image
             contentFit="cover"
             transition={1000}
@@ -139,10 +146,10 @@ const styles = StyleSheet.create({
     width: "100%",
     // height: 120,
     padding: 20,
-    
+
   },
-  homeMainContainer:{
-    flex:1,
+  homeMainContainer: {
+    flex: 1,
     backgroundColor: "#ecf0f1",
   },
   profileImg: {
@@ -167,10 +174,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.8,
     justifyContent: "space-between",
     padding: 10,
-    
-    margin:20,
-    marginTop:2,
-  
+
+    margin: 20,
+    marginTop: 2,
+
     borderRadius: 7,
     alignItems: "center",
   },

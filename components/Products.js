@@ -23,8 +23,10 @@ import {
   incrementProductQuantity,
 } from "../Redux/Reducers/ProductReducer";
 import GoToCart from "./GoToCart";
+import { useNavigation } from "@react-navigation/native";
 
 const Products = ({ item }) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
 
@@ -147,7 +149,12 @@ const Products = ({ item }) => {
       {/* go to cart component */}
       {/* only render when cart has something */}
       {cart.length > 0 ? (
-        <GoToCart price={totalPrice} totalItems={cartQuantity} />
+        <GoToCart
+          price={totalPrice}
+          totalItems={cartQuantity}
+          title={"Go to delivery"}
+          onPress={() => navigation.navigate("Cart")}
+        />
       ) : null}
     </View>
   );

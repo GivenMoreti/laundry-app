@@ -12,12 +12,10 @@ import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepic
 import GoToCart from "../components/GoToCart";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-
-
-
+import { useKeepAwake } from "expo-keep-awake";
 
 const CartScreen = () => {
-
+  useKeepAwake();
   const navigation = useNavigation();
 
   const [selectedDate, setSelectedDate] = useState(""); //date
@@ -46,31 +44,31 @@ const CartScreen = () => {
   const collectionTime = [
     {
       id: "0",
-      time: "9h00",
+      timeSlot: "9h00",
     },
     {
       id: "1",
-      time: "10h00",
+      timeSlot: "10h00",
     },
     {
       id: "2",
-      time: "11h00",
+      timeSlot: "11h00",
     },
     {
       id: "3",
-      time: "12h00",
+      timeSlot: "12h00",
     },
     {
       id: "4",
-      time: "13h00",
+      timeSlot: "13h00",
     },
     {
       id: "5",
-      time: "14h00",
+      timeSlot: "14h00",
     },
     {
       id: "6",
-      time: "15h00",
+      timeSlot: "15h00",
     },
   ];
 
@@ -90,14 +88,14 @@ const CartScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.headerContainer}>
         <Text style={styles.textHeader}>Enter Address</Text>
         <TextInput
           style={styles.textInputField}
           placeholder="enter delivery address..."
         />
       </View>
-      <View>
+      <View style={styles.collectionDate}>
         <Text style={styles.textHeader}>Collection date</Text>
         <View>
           <HorizontalDatepicker
@@ -119,7 +117,7 @@ const CartScreen = () => {
         </View>
       </View>
       {/* duration */}
-      <View>
+      <View style={styles.duration}>
         <Text style={styles.textHeader}>Duration</Text>
         <FlatList
           horizontal
@@ -133,11 +131,13 @@ const CartScreen = () => {
               style={
                 duration.includes(item.name)
                   ? {
-                    backgroundColor: "#000000",
+                    backgroundColor: "yellow",
+                    borderRadius: 10,
+                    height: 40,
+                    padding: 10,
                   }
                   : {
                     backgroundColor: "#ececec",
-                    color: "#fff",
                     margin: 10,
                     height: 38,
                     padding: 5,
@@ -152,24 +152,26 @@ const CartScreen = () => {
         />
       </View>
       {/* time */}
-      <View>
+      <View style={styles.collectionTime}>
         <Text style={styles.textHeader}>Collection time</Text>
+
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.timeContainer}
           data={collectionTime}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Pressable
-              onPress={() => setCollection(item.time)}
-              key={item.id}
+              onPress={() => setCollection(item.timeSlot)}
+              key={item.id.toString()}
               style={
-                collection.includes(item.time)
+                collection.includes(item.timeSlot)
                   ? {
-                    backgroundColor: "#000000",
-                    color: "#fff",
+                    backgroundColor: "yellow",
                     borderRadius: 10,
+                    height: 40,
+                    padding: 10,
                   }
                   : {
                     margin: 10,
@@ -180,7 +182,7 @@ const CartScreen = () => {
                   }
               }
             >
-              <Text>{item.name}</Text>
+              <Text>{item.timeSlot}</Text>
             </Pressable>
           )}
         />
@@ -205,8 +207,20 @@ export default CartScreen;
 const styles = StyleSheet.create({
   container: {
     padding: 30,
-    flex: 1,
+    flex: 4,
     backgroundColor: "#ecf0f1",
+  },
+  headerContainer: {
+    flex: 1,
+  },
+  collectionDate: {
+    flex: 1,
+  },
+  collectionTime: {
+    flex: 1,
+  },
+  duration: {
+    flex: 1,
   },
   textInputField: {
     padding: 10,

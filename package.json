@@ -28,7 +28,10 @@
     "react-native-btr": "^2.2.0",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-image-slider-box": "^2.0.7",
-    "react-redux": "^9.0.4"
+    "react-redux": "^9.0.4",
+    "expo-image-picker": "~14.3.2",
+    "@react-native-async-storage/async-storage": "1.18.2",
+    "expo-sqlite": "~11.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

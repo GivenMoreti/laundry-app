@@ -10,8 +10,8 @@ export const profileSlice = createSlice({
         getProfile: (state, action) => {
             state.name.push(...action.payload);
         },
-    }
-})
+    },
+});
 
-export const { getProfile} = profileSlice.actions;
+export const { getProfile } = profileSlice.actions;
 export default profileSlice.reducer;

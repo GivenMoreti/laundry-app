@@ -117,7 +117,7 @@ const Products = ({ item }) => {
                         }}
                       />
 
-                      <Text>{cartQuantity}</Text>
+                      <Text>{item.quantity}</Text>
 
                       <AntDesign
                         name="minus"

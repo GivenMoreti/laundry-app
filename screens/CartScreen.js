@@ -5,9 +5,9 @@ import {
   TextInput,
   View,
   FlatList,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
-import Theme from "./Theme/Theme";
 import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepicker";
 import GoToCart from "../components/GoToCart";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,11 +17,27 @@ import { useKeepAwake } from "expo-keep-awake";
 const CartScreen = () => {
   useKeepAwake();
   const navigation = useNavigation();
-
+  const [userAddress,setUserAdress] = useState("");
   const [selectedDate, setSelectedDate] = useState(""); //date
   const [collection, setCollection] = useState(""); //time
   const [duration, setDuration] = useState(""); //duration
 
+  const validateAddressFields = () => {
+    if (!selectedDate || !collection || !duration ||!userAddress) {
+      Alert.alert("Some fields empty", "All fields mandatory", [
+        {
+          text: "cancel",
+          onPress: () => console.log("Cancelled"),
+          style: "cancel",
+        },
+        {
+          text: "Ok",
+          onPress: () => console.log("Ok pressed"),
+        },
+        { cancelable: false },
+      ]);
+    }
+  };
   const durationTime = [
     {
       id: "0",
@@ -75,7 +91,7 @@ const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
 
-  console.log("cart arr ", cart);
+  console.log("cart arr : ", cart);
 
   // to be added to GoToCart.js bottom pane
   const totalPrice = cart
@@ -91,6 +107,7 @@ const CartScreen = () => {
       <View style={styles.headerContainer}>
         <Text style={styles.textHeader}>Enter Address</Text>
         <TextInput
+          value={userAddress}
           style={styles.textInputField}
           placeholder="enter delivery address..."
         />
@@ -131,7 +148,7 @@ const CartScreen = () => {
               style={
                 duration.includes(item.name)
                   ? {
-                    backgroundColor: "yellow",
+                    backgroundColor: "#bdc3c7",
                     borderRadius: 10,
                     height: 40,
                     padding: 10,
@@ -168,7 +185,7 @@ const CartScreen = () => {
               style={
                 collection.includes(item.timeSlot)
                   ? {
-                    backgroundColor: "yellow",
+                    backgroundColor: "#bdc3c7",
                     borderRadius: 10,
                     height: 40,
                     padding: 10,
@@ -181,8 +198,10 @@ const CartScreen = () => {
                     borderRadius: 10,
                   }
               }
+              onLongPress={(item) => id.id === !item.timeSlot}
             >
               <Text>{item.timeSlot}</Text>
+
             </Pressable>
           )}
         />
@@ -194,7 +213,11 @@ const CartScreen = () => {
           totalItems={cartQuantity}
           title={"go to payment"}
           onPress={() => {
-            navigation.navigate("Payment");
+            if (selectedDate && collection && duration && userAddress) {
+              navigation.navigate("Payment");
+            } else {
+              validateAddressFields();
+            }
           }}
         />
       </View>

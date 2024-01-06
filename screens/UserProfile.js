@@ -3,16 +3,12 @@ import {
   Text,
   TextInput,
   View,
-  Image,
-  Button,
-  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import CustomButton from "../components/CustomButton";
 import PickImage from "../components/PickImage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { useKeepAwake } from 'expo-keep-awake';
+import { useKeepAwake } from "expo-keep-awake";
 
 const UserProfile = () => {
   useKeepAwake();
@@ -34,7 +30,6 @@ const UserProfile = () => {
         if (storedImage) {
           setImage(storedImage);
         }
-
       } catch (error) {
         console.error("error loading stored name", error);
       }
@@ -42,11 +37,9 @@ const UserProfile = () => {
     loadProfileData();
   }, []);
 
-
   return (
     <View style={styles.container}>
       {/* pick image component */}
-
 
       <PickImage />
 

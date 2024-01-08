@@ -10,6 +10,7 @@ import PickImage from "../components/PickImage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useKeepAwake } from "expo-keep-awake";
 
+
 const UserProfile = () => {
   useKeepAwake();
   const [name, setName] = useState("");
@@ -44,6 +45,11 @@ const UserProfile = () => {
       <PickImage />
 
       {/* pick image component end */}
+      {/* put the extract username function here with username element 
+        const username = extractUsername(email); 
+        <Text>Username : {username}</Text>
+        <Text>Hello {username}</Text>
+      */}
       <Text>Name: {name}</Text>
       <TextInput
         style={styles.input}

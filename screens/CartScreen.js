@@ -17,13 +17,13 @@ import { useKeepAwake } from "expo-keep-awake";
 const CartScreen = () => {
   useKeepAwake();
   const navigation = useNavigation();
-  const [userAddress,setUserAdress] = useState("");
+  const [userAddress, setUserAdress] = useState("");
   const [selectedDate, setSelectedDate] = useState(""); //date
   const [collection, setCollection] = useState(""); //time
   const [duration, setDuration] = useState(""); //duration
 
   const validateAddressFields = () => {
-    if (!selectedDate || !collection || !duration ||!userAddress) {
+    if (!selectedDate || !collection || !duration || !userAddress) {
       Alert.alert("Some fields empty", "All fields mandatory", [
         {
           text: "cancel",
@@ -213,10 +213,11 @@ const CartScreen = () => {
           totalItems={cartQuantity}
           title={"go to payment"}
           onPress={() => {
-            if (selectedDate && collection && duration && userAddress) {
-              navigation.navigate("Payment");
-            } else {
+            if (!selectedDate && !collection && !duration && !userAddress) {
+
               validateAddressFields();
+            } else {
+              navigation.navigate("Payment");
             }
           }}
         />

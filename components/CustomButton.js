@@ -15,15 +15,14 @@ const CustomButton = (props) => {
 export default CustomButton;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#bdc3c7",
-    padding: 40,
+    
   },
   genButton: {
     borderRadius: 10,
     height: 50,
-    backgroundColor: "", //remove so every component gets specific color
     marginBottom: 10,
+    backgroundColor:"orangered",
+    borderWidth:0.5,
   },
   buttonText: {
     textAlign: "center",

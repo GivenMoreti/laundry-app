@@ -104,7 +104,7 @@ const Products = ({ item }) => {
                 <View style={styles.itemText}>
                   <Text>{item.title}</Text>
                   <Text>R{item.price}</Text>
-
+                  
                   {cart.some((c) => c.id === item.id) ? (
                     <Text>
                       <AntDesign
@@ -118,7 +118,7 @@ const Products = ({ item }) => {
                       />
 
                       <Text>{item.quantity}</Text>
-
+                      
                       <AntDesign
                         name="minus"
                         size={24}

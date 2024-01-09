@@ -17,7 +17,7 @@ import { useKeepAwake } from "expo-keep-awake";
 const CartScreen = () => {
   useKeepAwake();
   const navigation = useNavigation();
-  const [userAddress, setUserAdress] = useState("");
+  const [userAddress, setUserAddress] = useState("");
   const [selectedDate, setSelectedDate] = useState(""); //date
   const [collection, setCollection] = useState(""); //time
   const [duration, setDuration] = useState(""); //duration
@@ -38,6 +38,8 @@ const CartScreen = () => {
       ]);
     }
   };
+ 
+//  data starts here
   const durationTime = [
     {
       id: "0",
@@ -106,12 +108,17 @@ const CartScreen = () => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.textHeader}>Enter Address</Text>
+          {/* get user address */}
         <TextInput
           value={userAddress}
           style={styles.textInputField}
           placeholder="enter delivery address..."
+          onChangeText={(text) => setUserAddress(text)}
         />
+
       </View>
+
+        {/* user selects collection date */}
       <View style={styles.collectionDate}>
         <Text style={styles.textHeader}>Collection date</Text>
         <View>
@@ -133,7 +140,7 @@ const CartScreen = () => {
           />
         </View>
       </View>
-      {/* duration */}
+      {/* user selects duration */}
       <View style={styles.duration}>
         <Text style={styles.textHeader}>Duration</Text>
         <FlatList
@@ -212,6 +219,7 @@ const CartScreen = () => {
           price={totalPrice}
           totalItems={cartQuantity}
           title={"go to payment"}
+
           onPress={() => {
             if (!selectedDate && !collection && !duration && !userAddress) {
 

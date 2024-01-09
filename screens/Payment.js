@@ -1,20 +1,33 @@
 import {
+  Pressable,
   StyleSheet,
   Text,
+  TextInput,
   View,
-  Alert,
-  Pressable,
   FlatList,
+  Alert,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import GoToCart from "../components/GoToCart";
 import { useDispatch, useSelector } from "react-redux";
-import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
+import { useKeepAwake } from "expo-keep-awake";
+import CustomButton from "../components/CustomButton";
+import { AntDesign } from "@expo/vector-icons";
+import {
+  addToCart,
+  removeFromCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../Redux/Reducers/CartReducer";
 
-const Payment = () => {
+import {
+  decrementProductQuantity,
+  incrementProductQuantity,
+} from "../Redux/Reducers/ProductReducer";
+
+const Payment = ({ item }) => {
+  const navigation = useNavigation();
   const paymentMethods = [
     {
       id: "0",
@@ -33,9 +46,10 @@ const Payment = () => {
     },
   ];
 
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
+
+  console.log("PAYMENT : ", cart);
 
   // to be added to GoToCart.js bottom pane
   const totalPrice = cart
@@ -48,55 +62,68 @@ const Payment = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.cartItems}>
-        {cart.map((item, index) => {
-          <View key={index}>
-            <Text>{item.title}</Text>
-            <Text>{item.price}</Text>
-            {/* plus minus buttons */}
-            <CustomButton
-              title={"-"}
+      {/* cart items */}
+      <View style={styles.itemInCartContainer}>
+        <Text>Cart content</Text>
+        {cart.map((item) => (
+          <View style={styles.itemInCart}>
+            <Text style={styles.item}>{item.title}</Text>
+            <Text style={styles.item}>R{item.price}</Text>
+            {/* minus */}
+            <AntDesign
+              name="minus"
+              size={24}
+              color="skyblue"
               onPress={() => {
                 dispatch(decrementProductQuantity(item));
                 dispatch(decrementQuantity(item));
               }}
             />
             <Text>{item.quantity}</Text>
-            <CustomButton
-              title={"+"}
+            <AntDesign
+              name="plus"
+              size={24}
+              color="orangered"
               onPress={() => {
                 dispatch(incrementProductQuantity(item));
                 dispatch(incrementQuantity(item));
               }}
             />
-          </View>;
-        })}
-      </View>
-      <View style={styles.paymentContainer}>
-        <View>
-          <Text>Billing Information </Text>
-          <Text>Payment due :R {totalPrice}</Text>
-          <Text>Total items :{cartQuantity}</Text>
-        </View>
-        <View>
-          <Text>Choose payment method</Text>
-          <View>
-            <FlatList
-              style={styles.paymentMethods}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              data={paymentMethods}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.paymentMethod}>
-                  <Pressable key={item.id}>
-                    <Text style={styles.methodText}>{item.method}</Text>
-                  </Pressable>
-                </View>
-              )}
-            />
           </View>
+        ))}
+      </View>
+      <View style={styles.billingContainer}>
+        <View style={styles.billingItem}>
+          <Text style={styles.billingItemTextHeader}>Billing Information </Text>
+          <Text style={styles.billingItemText}>
+            Payment due :R {totalPrice}
+          </Text>
+          <Text style={styles.billingItemText}>
+            Total items :{cartQuantity}
+          </Text>
         </View>
+        <View style={styles.paymentMethods}>
+          <Text>Choose payment method</Text>
+
+          <FlatList
+            style={styles.methodItem}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={paymentMethods}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Pressable
+                key={item.id}
+                onPress={() => Alert.alert("You chose " + item.method + item.id)}
+              >
+                <Text style={styles.methodText}>{item.method}</Text>
+              </Pressable>
+            )}
+          />
+        </View>
+        {/* <View style={styles.distance}>
+          <Text>Distance</Text>
+        </View> */}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -115,7 +142,7 @@ const Payment = () => {
                 },
                 {
                   text: "Ok",
-                  onPress: () => navigation.navigate("Cart"),
+                  onPress: () => navigation.goBack("Cart"),
                 },
               ],
               {
@@ -124,7 +151,16 @@ const Payment = () => {
             )
           }
         />
-        <CustomButton title={"Pay"} />
+        <CustomButton
+          title={"Pay"}
+          onPress={() => navigation.navigate("Orders")}
+        />
+        <Text
+          style={styles.goToCartText}
+          onPress={() => navigation.replace("Home")}
+        >
+          Go back home
+        </Text>
       </View>
     </View>
   );
@@ -135,24 +171,58 @@ export default Payment;
 const styles = StyleSheet.create({
   container: {
     flex: 3,
-    backgroundColor: "#ecf0f5",
-    padding: 20,
-  }, cartItems: {
+    backgroundColor: "#fff",
+    paddingTop: 40,
+    padding: 10,
+  },
+  itemInCart: {
+    flexDirection: "row",
+    padding: 10,
+    margin: 5,
+    borderWidth: 0.1,
+    borderRadius: 5,
+    justifyContent: "space-around",
+  },
+  itemInCartContainer: {
     flex: 1,
+    width: "100%",
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: "#ecf0f5",
+    marginBottom: 10,
+  },
+  billingContainer: {
+    marginBottom: 10,
+    flex: 1,
+    padding: 10,
+    backgroundColor: "#ecf0f5",
+    borderRadius: 10,
+  },
+  billingItem: {
+    padding: 10,
   },
   buttonContainer: {
     flex: 1,
-    marginBottom: 20,
   },
-  paymentContainer: {
-    borderRadius: 10,
-    padding: 10,
+  billingItemText: {
+    margin: 10,
+  },
+  goToCartText: {
     marginTop: 10,
-    flex: 1,
-    backgroundColor: "#E5E5E5",
+    textAlign: "center",
+    color: "gray",
   },
   paymentMethods: {
-    flexDirection: "row",
+    padding: 10,
+  },
+  methodItem: {
     margin: 10,
+  },
+  methodText: {
+    margin: 10,
+    borderWidth: 0.2,
+
+    borderRadius: 2,
+    padding: 3,
   },
 });

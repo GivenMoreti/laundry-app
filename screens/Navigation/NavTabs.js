@@ -7,6 +7,7 @@ import UserProfile from "../UserProfile";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Payment from "../Payment";
 import LogonScreen from "../LogonScreen";
+import OrderScreen from "../OrderScreen";
 
 
 
@@ -17,7 +18,7 @@ const NavTabs = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-       
+
       >
         <Stack.Screen
           name="Login"
@@ -51,6 +52,14 @@ const NavTabs = () => {
         <Stack.Screen
           name="Cart"
           component={CartScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="Orders"
+          component={OrderScreen}
           options={{
             headerShown: false,
           }}
